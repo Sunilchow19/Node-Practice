@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+    <form method="get">
+
+        <input type="text" name="name" id="user">
+
+        <input type="password" name="password" id="pass">
+
+        <input type="submit" value="Login" id="reg">
+    </form>
+
+    <script>
+
+        let sub=document.getElementById("reg")
+
+        sub.addEventListener("click",(e)=>{
+
+            e.preventDefault()
+
+                 fetch('http://localhost:3012/login')
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .then(res=>{
+            
+            let user=document.getElementById("user")
+            let pass=document.getElementById("pass")
+            
+            console.log(res);
+            let u=user.value
+            let pa=pass.value
+
+            let arr=[]
+            for(i=0;i<res.length;i++){
+                
+
+                
+                if(u===res[i]["name"]){
+                    
+                   arr.push(res[i])
+
+                }
+            }
+
+           
+            
+            if(arr.length>0){
+
+                if((arr[0]["name"]==u)&&(arr[0]["password"]==pa)){
+                    alert("Login Successfull :)")
+                }
+
+                else{
+                    alert("Invalid Credentials! Please check it Once again :)")
+                }
+
+            }
+            else{
+                let conf=confirm("Please Register :)")
+
+                if(conf){
+                    window.location.assign("./index.html")
+                }
+            }           
+        })
+        .catch(error => console.error('Error:', error));
+
+    })
+
+
+    </script>
+</body>
+</html>
